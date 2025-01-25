@@ -1,0 +1,206 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #3d005c;
+    background-image: url("https://www.transparenttextures.com/patterns/pool-table.png");
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #a2c2e0;
+}
+
+.game-board-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 180px);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+.game-board-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 180px);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .game-board-3 {
+        grid-template-columns: repeat(2, 180px); /* 2 колонки по 180px на мобильных */
+    }
+}
+
+.game-board-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 180px);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .game-board-4 {
+        grid-template-columns: repeat(2, 180px); /* 2 колонки по 180px на мобильных */
+    }
+}
+
+.game-board-5 {
+    display: grid;
+    grid-template-columns: repeat(5, 180px);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .game-board-5 {
+        grid-template-columns: repeat(2, 180px); /* 2 колонки по 180px на мобильных */
+    }
+}
+
+.game-board-6 {
+    display: grid;
+    grid-template-columns: repeat(4, 180px);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .game-board-6 {
+        grid-template-columns: repeat(2, 180px); /* 2 колонки по 180px на мобильных */
+    }
+}
+
+.game-board-7 {
+    display: grid;
+    grid-template-columns: repeat(7, 180px);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .game-board-7 {
+        grid-template-columns: repeat(2, 180px); /* 2 колонки по 180px на мобильных */
+    }
+}
+
+.game-board-8 {
+    display: grid;
+    grid-template-columns: repeat(8, 180px);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .game-board-8 {
+        grid-template-columns: repeat(2, 180px); /* 2 колонки по 180px на мобильных */
+    }
+}
+
+.game-board-9 {
+    display: grid;
+    grid-template-columns: repeat(6, 180px);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .game-board-9 {
+        grid-template-columns: repeat(2, 180px); /* 2 колонки по 180px на мобильных */
+    }
+}
+
+.card {
+    width: 180px;
+    height: 180px;
+    background-image: url("https://www.transparenttextures.com/patterns/noisy-net.png"), url('images/cover.png');
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 0.2s ease, background-color 0.5s, box-shadow 0.3s ease; /* Добавляем плавность для тени */
+    background-blend-mode: overlay;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Тень для эффекта "лежит на столе" */
+}
+
+.card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.card.flip {
+    background-image: none;
+    background-color: #000000;
+    cursor: default;
+}
+
+.card img {
+    width: 80%;
+    height: 80%;
+    display: none;
+}
+
+.card.flip img {
+    display: block;
+}
+
+.restart {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.restart:hover {
+    background-color: #27ae60;
+}
+
+#fireworks-container {
+    position: fixed; /* Используем fixed, чтобы контейнер оставался на экране при прокрутке */
+    top: 0;
+    left: 0;
+    width: 100vw; /* 100% ширины экрана */
+    height: 100vh; /* 100% высоты экрана */
+    pointer-events: none; /* Чтобы контейнер не мешал взаимодействию с другими элементами на странице */
+    z-index: 9999; /* Размещаем контейнер поверх всего */
+}
+
+#fireworks-container {
+    position: fixed; /* Используем fixed, чтобы контейнер оставался на экране при прокрутке */
+    top: 0;
+    left: 0;
+    width: 100vw; /* 100% ширины экрана */
+    height: 100vh; /* 100% высоты экрана */
+    pointer-events: none; /* Чтобы контейнер не мешал взаимодействию с другими элементами на странице */
+    z-index: 9999; /* Размещаем контейнер поверх всего */
+}
+
+.firework {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #f39c12; /* Оранжевый цвет для частиц */
+    border-radius: 50%;
+    opacity: 0;
+    animation: explosion 3s forwards;
+}
+
+@keyframes explosion {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5) translate(calc(200px * (random(-1, 1))), calc(200px * (random(-1, 1))));
+        opacity: 0;
+    }
+}

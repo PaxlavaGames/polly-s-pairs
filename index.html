@@ -4,172 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polly's Pairs</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f0f8ff;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-
-        .game-board {
-            display: grid;
-            grid-template-columns: repeat(4, 100px);
-            grid-gap: 10px;
-            justify-content: center;
-        }
-
-        .card {
-            width: 100px;
-            height: 100px;
-            background-color: #3498db;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transform: scale(1);
-            transition: transform 0.2s ease, background-color 0.5s;
-        }
-
-        .card:hover {
-            transform: scale(1.1);
-        }
-
-        .card.flip {
-            background-color: #ecf0f1;
-            cursor: default;
-        }
-
-        .card img {
-            width: 80%;
-            height: 80%;
-            display: none;
-        }
-
-        .card.flip img {
-            display: block;
-        }
-
-        .restart {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .restart:hover {
-            background-color: #27ae60;
-        }
-    </style>
+     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Polly's Pairs</h1>
+    <audio id="audio_flip" src="sounds/flip.wav"></audio>
+    <audio id="audio_shuffle" src="sounds/shuffle.wav"></audio>
+    <audio id="audio_victory" src="sounds/victory.wav"></audio>
+    <audio id="audio_failure" src="sounds/failure.wav"></audio>
+    <audio id="audio_game_over" src="sounds/game_over.wav"></audio>
+    <div id="fireworks-container"></div>
+    <h1>Polly's Pairs &hearts; <span id="life_hearts">0</span></h1>
     <div class="game-board" id="gameBoard"></div>
-    <button class="restart" id="restartButton">Restart</button>
+<!--    <button class="restart" id="restartButton">Restart</button>-->
+    <script src="game.js"></script>
 
-    <script>
-        const parrots = [
-            '🦜', '🦜', '🦢', '🦢', '🕊️', '🕊️', '🐦', '🐦'
-        ];
-
-        let firstCard = null;
-        let secondCard = null;
-        let lockBoard = false;
-
-        const gameBoard = document.getElementById('gameBoard');
-
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
-        function createBoard() {
-            shuffle(parrots);
-            gameBoard.innerHTML = '';
-            parrots.forEach(parrot => {
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.dataset.parrot = parrot;
-
-                const img = document.createElement('span');
-                img.textContent = parrot;
-                img.style.display = 'none';
-                card.appendChild(img);
-
-                card.addEventListener('click', flipCard);
-                gameBoard.appendChild(card);
-            });
-        }
-
-        function flipCard() {
-            if (lockBoard || this === firstCard || this.classList.contains('flip')) return;
-
-            this.classList.add('flip');
-            this.querySelector('span').style.display = 'block';
-
-            if (!firstCard) {
-                firstCard = this;
-                return;
-            }
-
-            secondCard = this;
-            checkForMatch();
-        }
-
-        function checkForMatch() {
-            const isMatch = firstCard.dataset.parrot === secondCard.dataset.parrot;
-
-            if (isMatch) {
-                disableCards();
-            } else {
-                unflipCards();
-            }
-        }
-
-        function disableCards() {
-            firstCard.removeEventListener('click', flipCard);
-            secondCard.removeEventListener('click', flipCard);
-
-            resetBoard();
-        }
-
-        function unflipCards() {
-            lockBoard = true;
-
-            setTimeout(() => {
-                firstCard.classList.remove('flip');
-                secondCard.classList.remove('flip');
-
-                firstCard.querySelector('span').style.display = 'none';
-                secondCard.querySelector('span').style.display = 'none';
-
-                resetBoard();
-            }, 1000);
-        }
-
-        function resetBoard() {
-            [firstCard, secondCard, lockBoard] = [null, null, false];
-        }
-
-        document.getElementById('restartButton').addEventListener('click', createBoard);
-
-        createBoard();
-    </script>
 </body>
 </html>
